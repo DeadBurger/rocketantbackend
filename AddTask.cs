@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace RocketAnt.Function
 {
-    public static class AddTask
+    public class AddTask
     {
         [FunctionName("AddTask")]
         public static async Task<IActionResult> Run(
@@ -30,6 +31,27 @@ namespace RocketAnt.Function
 
             return new OkObjectResult(responseMessage);
         }
+
+        [FunctionName("SendMessage")]
+        public static async Task<IActionResult> SendMessage(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+            [SignalR(HubName = "SignalRTest")] IAsyncCollector<SignalRMessage> signalRMessages, ILogger log)
+        {
+            string name = req.Query["name"];
+
+            await signalRMessages.AddAsync(
+                        new SignalRMessage
+                        {
+                            Target = "SendMessage",
+                            Arguments = new[] { name
+                            }
+                        });
+
+            await signalRMessages.FlushAsync();
+
+            return new OkObjectResult("OK");
+        }
+
     }
 }
 
