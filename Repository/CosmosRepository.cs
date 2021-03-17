@@ -38,6 +38,23 @@ namespace RocketAnt.Function
             return result;
         }
 
+        public async Task<List<T>> GetLatest(int count)
+        {
+            Container container = GetContainer();
+            IQueryable<T> queryable = container.GetItemLinqQueryable<T>()
+            .OrderByDescending(o => o.UpdatedAt)
+            .Take(count);
+
+            List<T> result = new List<T>();
+            FeedIterator<T> feedIterator = queryable.ToFeedIterator<T>();
+            while (feedIterator.HasMoreResults)
+            {
+                FeedResponse<T> items = await feedIterator.ReadNextAsync();
+                result.AddRange(items);
+            }
+            return result;
+        }
+
         public async Task<ItemResponse<T>> CreateOrUpdate(T entity)
         {
             Container container = GetContainer();

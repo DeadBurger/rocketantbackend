@@ -25,7 +25,7 @@ namespace RocketAnt.Function
 
         [FunctionName("CreateTask")]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "createtask")] CreateTaskContract contract,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "tasks")] CreateTaskContract contract,
             ILogger log)
         {
             var validationResult = contractValidator.Validate(contract);
@@ -38,6 +38,7 @@ namespace RocketAnt.Function
             backgroundTask.CustomerId = "testcustomer";
             backgroundTask.NumOfSteps = contract.NumOfSteps.Value;
             backgroundTask.Id = Guid.NewGuid().ToString();
+            backgroundTask.Description = "test task " + backgroundTask.Id;
 
             ItemResponse<BackgroundTask> createResult = await taskRepository.CreateOrUpdate(backgroundTask);
 

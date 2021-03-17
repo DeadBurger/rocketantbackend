@@ -18,7 +18,7 @@ namespace RocketAnt.Function
             ConnectionStringSetting = "CosmosDBConnection",
             LeaseCollectionName = "leases",
             LeaseCollectionPrefix="newtask")] IReadOnlyList<Document> input,
-            [SignalR(HubName = "SignalRTest")] IAsyncCollector<SignalRMessage> signalRMessages, ILogger log)
+            [SignalR(HubName = "taskhub")] IAsyncCollector<SignalRMessage> signalRMessages, ILogger log)
         {
 
             if (input != null && input.Count > 0)

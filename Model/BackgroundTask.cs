@@ -5,6 +5,8 @@ namespace RocketAnt.Function
     {
         public string CustomerId { get; set; }
 
+        public string Description { get; set; }
+
         public override string PartitionKey => CustomerId;
 
         public int CurrentStep { get; protected set; } = 1;

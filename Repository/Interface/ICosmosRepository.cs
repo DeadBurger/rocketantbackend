@@ -10,5 +10,6 @@ namespace RocketAnt.Function
     {
         Task<ItemResponse<T>> CreateOrUpdate(T entity);
         Task<List<T>> GetAll();
+        Task<List<T>> GetLatest(int count);
     }
 }
