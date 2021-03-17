@@ -9,5 +9,6 @@ namespace RocketAnt.Function
         public int NumOfSteps { get; set; }
 
         public int CurrentStep { get; set; }
+        public string Desciption { get; set; }
     }
 }

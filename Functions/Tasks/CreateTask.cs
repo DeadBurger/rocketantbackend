@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Logging;
 
 namespace RocketAnt.Function
@@ -26,6 +27,7 @@ namespace RocketAnt.Function
         [FunctionName("CreateTask")]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "tasks")] CreateTaskContract contract,
+            [SignalR(HubName = "taskhub")] IAsyncCollector<SignalRMessage> signalRMessages,
             ILogger log)
         {
             var validationResult = contractValidator.Validate(contract);
@@ -41,6 +43,7 @@ namespace RocketAnt.Function
             backgroundTask.Description = "test task " + backgroundTask.Id;
 
             ItemResponse<BackgroundTask> createResult = await taskRepository.CreateOrUpdate(backgroundTask);
+            await SendSignalRMessage(signalRMessages, backgroundTask);
 
             TaskCreatedContract result = new TaskCreatedContract()
             {
@@ -48,6 +51,22 @@ namespace RocketAnt.Function
             };
 
             return new OkObjectResult(result);
+        }
+
+        private static async Task SendSignalRMessage(IAsyncCollector<SignalRMessage> signalRMessages, BackgroundTask backgroundTask)
+        {
+            await signalRMessages.AddAsync(new SignalRMessage()
+            {
+                Target = "taskCreated",
+                Arguments = new[] {
+                    new TaskContract()
+                    {
+                        Id = backgroundTask.Id,
+                        CurrentStep = backgroundTask.CurrentStep,
+                        Desciption = backgroundTask.Description
+                    }
+                }
+            });
         }
     }
 }

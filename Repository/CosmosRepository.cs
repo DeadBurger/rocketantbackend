@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -59,6 +58,23 @@ namespace RocketAnt.Function
         {
             Container container = GetContainer();
             return await container.UpsertItemAsync<T>(entity, new PartitionKey(entity.PartitionKey));
+        }
+
+        public async Task RemoveAll()
+        {
+            var allEntities = await GetAll();
+            Container container = GetContainer();
+
+            List<Task> removeTasks = new List<Task>();
+
+            foreach (var item in allEntities)
+            {
+                removeTasks.Add(container.DeleteItemAsync<T>(item.Id,
+                    new PartitionKey(item.PartitionKey)));
+
+            }
+
+            Task.WaitAll(removeTasks.ToArray());
         }
     }
 }
