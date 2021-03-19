@@ -4,11 +4,10 @@ namespace RocketAnt.Function
     {
         public string Id { get; set; }
 
-        public string Name { get; set; }
-
         public int NumOfSteps { get; set; }
 
         public int CurrentStep { get; set; }
-        public string Desciption { get; set; }
+        public string Description { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }

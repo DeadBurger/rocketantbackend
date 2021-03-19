@@ -29,7 +29,10 @@ namespace RocketAnt.Function
             var result = tasks.Select(o => new TaskContract()
             {
                 Id = o.Id,
-                CurrentStep = o.CurrentStep
+                CurrentStep = o.CurrentStep,
+                Description = o.Description,
+                NumOfSteps = o.NumOfSteps,
+                IsCompleted = o.IsCompleted
             });
 
             return new OkObjectResult(result);

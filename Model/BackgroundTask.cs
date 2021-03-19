@@ -9,7 +9,7 @@ namespace RocketAnt.Function
 
         public override string PartitionKey => CustomerId;
 
-        public int CurrentStep { get; protected set; } = 1;
+        public int CurrentStep { get; set; } = 1;
         public int NumOfSteps { get; set; }
 
         public void NextStep()
