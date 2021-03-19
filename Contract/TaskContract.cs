@@ -12,7 +12,7 @@ namespace RocketAnt.Contract
         public int CurrentStep { get; set; }
         [JsonProperty("description")]
         public string Description { get; set; }
-        [JsonProperty("id")]
+        [JsonProperty("isCompleted")]
         public bool IsCompleted { get; set; }
     }
 }
