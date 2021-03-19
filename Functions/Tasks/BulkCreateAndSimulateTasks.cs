@@ -24,14 +24,17 @@ namespace RocketAnt.Function
 
             foreach (var i in Enumerable.Range(1, contract.NumberOfTasks.Value))
             {
+                await Task.Delay(300);
                 tasks.Add(context.CallActivityAsync<bool>("BulkCreateAndSimulateTasks_CreateTask", null));
             }
 
-            await Task.WhenAll(tasks.ToArray());
-
-
             await context.CallActivityAsync<bool>("BulkCreateAndSimulateTasks_ProgressRandomTask", null);
-            while (await context.CallActivityAsync<bool>("BulkCreateAndSimulateTasks_ProgressRandomTask", null)) ;
+            while (await context.CallActivityAsync<bool>("BulkCreateAndSimulateTasks_ProgressRandomTask", null))
+            {
+                await Task.Delay(300);
+            };
+
+            await Task.WhenAll(tasks.ToArray());
 
             return tasks.Select(o => o.Result).ToList();
         }
