@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 
 namespace RocketAnt.Function
@@ -24,17 +24,15 @@ namespace RocketAnt.Function
 
             foreach (var i in Enumerable.Range(1, contract.NumberOfTasks.Value))
             {
-                await Task.Delay(300);
                 tasks.Add(context.CallActivityAsync<bool>("BulkCreateAndSimulateTasks_CreateTask", null));
             }
+            await Task.WhenAll(tasks.ToArray());
 
             await context.CallActivityAsync<bool>("BulkCreateAndSimulateTasks_ProgressRandomTask", null);
             while (await context.CallActivityAsync<bool>("BulkCreateAndSimulateTasks_ProgressRandomTask", null))
             {
-                await Task.Delay(300);
+                await context.CreateTimer(context.CurrentUtcDateTime.AddMilliseconds(300), CancellationToken.None);
             };
-
-            await Task.WhenAll(tasks.ToArray());
 
             return tasks.Select(o => o.Result).ToList();
         }
