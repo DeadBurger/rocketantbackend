@@ -3,7 +3,7 @@ using System.Net.Http;
 using System;
 using System.Collections.Generic;
 
-namespace RocketAnt.Function
+namespace RocketAnt.Validator
 {
     public abstract class ContractBaseValidator<T> : IContractValidator<T>
     {

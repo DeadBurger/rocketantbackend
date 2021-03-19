@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
 
-namespace RocketAnt.Function
+namespace RocketAnt.Repository
 {
     public abstract class CosmosRepository<T> : ICosmosRepository<T> where T : CosmosEntity
     {

@@ -1,5 +1,5 @@
 
-namespace RocketAnt.Function
+namespace RocketAnt.Validator
 {
     public interface IContractValidator<T>
     {

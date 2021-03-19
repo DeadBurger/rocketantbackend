@@ -31,7 +31,7 @@ namespace RocketAnt.Function
             await context.CallActivityAsync<bool>("BulkCreateAndSimulateTasks_ProgressRandomTask", null);
             while (await context.CallActivityAsync<bool>("BulkCreateAndSimulateTasks_ProgressRandomTask", null))
             {
-                await context.CreateTimer(context.CurrentUtcDateTime.AddMilliseconds(300), CancellationToken.None);
+                await context.CreateTimer(context.CurrentUtcDateTime.AddMilliseconds(1000), CancellationToken.None);
             };
 
             return tasks.Select(o => o.Result).ToList();

@@ -3,10 +3,12 @@ using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Fluent;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
+using RocketAnt.Repository;
+using RocketAnt.Validator;
 
-[assembly: FunctionsStartup(typeof(RocketAnt.Function.Startup))]
+[assembly: FunctionsStartup(typeof(RocketAnt.Startup))]
 
-namespace RocketAnt.Function
+namespace RocketAnt
 {
     public class Startup : FunctionsStartup
     {

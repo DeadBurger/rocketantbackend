@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace RocketAnt.Function
+namespace RocketAnt.Contract
 {
     public class TaskContract
     {
@@ -12,7 +12,7 @@ namespace RocketAnt.Function
         public int CurrentStep { get; set; }
         [JsonProperty("description")]
         public string Description { get; set; }
-        [JsonProperty("isCompleted")]
+        [JsonProperty("id")]
         public bool IsCompleted { get; set; }
     }
 }

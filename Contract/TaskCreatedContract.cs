@@ -1,4 +1,4 @@
-namespace RocketAnt.Function
+namespace RocketAnt.Contract
 {
     public class TaskCreatedContract
     {

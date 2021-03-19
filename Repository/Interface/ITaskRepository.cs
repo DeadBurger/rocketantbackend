@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace RocketAnt.Function
+namespace RocketAnt.Repository
 {
     public interface ITaskRepository : ICosmosRepository<BackgroundTask>
     {

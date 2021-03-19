@@ -1,4 +1,4 @@
-namespace RocketAnt.Function
+namespace RocketAnt
 {
     public class BulkCreateTasksContract
     {

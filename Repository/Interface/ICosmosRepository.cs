@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.Azure.Cosmos;
 
-namespace RocketAnt.Function
+namespace RocketAnt.Repository
 {
     public interface ICosmosRepository<T>
     {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RocketAnt.Function
+namespace RocketAnt.Repository
 {
     public static class Extensions
     {

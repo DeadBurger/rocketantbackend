@@ -1,5 +1,5 @@
 
-namespace RocketAnt.Function
+namespace RocketAnt
 {
     public class BackgroundTask : CosmosEntity
     {

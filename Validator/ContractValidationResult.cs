@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RocketAnt.Function
+namespace RocketAnt.Validator
 {
     public class ContractValidationResult
     {
