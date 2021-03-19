@@ -24,11 +24,16 @@ namespace RocketAnt.Function
         [FunctionName("BulkCreateAndSimulateTasks_ProgressRandomTask")]
         public async Task<bool> Run(
             [ActivityTrigger] IDurableActivityContext context,
-            ILogger log)
+            [SignalR(HubName = "taskhub")] IAsyncCollector<SignalRMessage> signalRMessages,
+            ILogger logger)
         {
             var task = await taskRepository.GetRandomIncompleteTask();
+            if (task == null)
+                return false;
+
             task.NextStep();
             await this.taskRepository.CreateOrUpdate(task);
+            await SendSignalRMessage(signalRMessages, task);
             return true;
         }
 
