@@ -7,6 +7,7 @@ using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Logging;
 using RocketAnt.Contract;
 using RocketAnt.Repository;
+using RocketAnt.Util;
 
 namespace RocketAnt.Function
 {
@@ -28,9 +29,9 @@ namespace RocketAnt.Function
 
             BackgroundTask backgroundTask = new BackgroundTask();
             backgroundTask.CustomerId = "testcustomer";
-            backgroundTask.NumOfSteps = random.Next(2, 8);
+            backgroundTask.NumOfSteps = random.Next(3, 12);
             backgroundTask.Id = Guid.NewGuid().ToString();
-            backgroundTask.Description = "test task " + backgroundTask.Id;
+            backgroundTask.Description = TaskNameGenerator.GenerateTaskName();
 
             ItemResponse<BackgroundTask> createResult = await taskRepository.CreateOrUpdate(backgroundTask);
             await SendSignalRMessage(signalRMessages, backgroundTask);
