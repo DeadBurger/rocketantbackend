@@ -26,13 +26,6 @@ jobs:
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
           dotnet build --configuration Release --output ./output
           popd
-
-      - name: "Run tests"
-        shell: bash
-        run: |
-          cd RocketAnt.Tests
-          dotnet test
-          popd
       - name: "Run Azure Functions Action"
         uses: Azure/functions-action@v1
         id: fa
