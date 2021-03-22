@@ -33,7 +33,7 @@ namespace RocketAnt.Function
                 Description = o.Description,
                 NumOfSteps = o.NumOfSteps,
                 IsCompleted = o.IsCompleted
-            });
+            }).ToList();
 
             return new OkObjectResult(result);
         }
